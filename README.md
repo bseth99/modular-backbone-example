@@ -1,4 +1,4 @@
-Building Modular Backbone Apps with RequireJS and Bower
+Building Modular Backbone Apps
 =========
 
 #### An Idea ####
