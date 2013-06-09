@@ -1,0 +1,9 @@
+{
+  "name": "webapp1-test",
+  "version": "0.0.1",
+  "dependencies": {
+    "requirejs": "latest",
+    "jquery": "latest",
+    "component1": "../component1"
+  }
+}

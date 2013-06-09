@@ -1,0 +1,23 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Component1</title>
+  <script src="../components/jquery/jquery.js"></script>
+  <script src="../components/underscore-amd/underscore.js"></script>
+  <script src="../components/backbone-amd/backbone.js"></script>
+  <script src="../component1.js"></script>
+</head>
+<body>
+  <h1>Quick Visual Test</h1>
+
+<script>
+$(function() {
+   var view1 = new Component1.Views.View1();
+
+
+   $(document.body).append(view1.render().$el);
+});
+</script>
+</body>
+</html>
