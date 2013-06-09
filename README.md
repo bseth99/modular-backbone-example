@@ -8,7 +8,7 @@ a backbone application and utilize Bower and RequireJS to both help manage the d
 workflow and package everything up for production deployment.  The example is actually two
 projects - a component and an application.  Here is the directory structure of each.  Navigate
 through the directories to read more.  I've added annotation describing the purpose and intended
-use.  I've also [written an article](http://benknowscode.wordpress.com/) 
+use.  I've also [written an article](http://benknowscode.wordpress.com/2013/06/09/building-modular-backbone-apps-with-requirejs-and-bower/) 
 detailing some of the thinking that went into this design
 
 
