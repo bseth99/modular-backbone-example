@@ -57,16 +57,13 @@ detailing some of the thinking that went into this design
          |
          |- lib                       # Define Backbone component here main.js is the
          |  |- main.js                # top level entry point for testing and building
-         |  |- scripts                # the final self-contained component.  Each level
-         |     |- models.js           # builds the top-level Component1 object so the 
-         |     |- views.js            # final component can be referenced globally
-         |     |- models              # or via RequireJS as component1
-         |     |  |- model1.js
-         |     |  |- model2.js
-         |     |- views
-         |        |- view1.js
-         |        |- layout           # The optimized version will use tpl to pre-compile
-         |           |- view1.html    # all the micro-templates and include them in the build
+         |  |- models                 # uses namespace plug-in to assemble object
+         |  |  |- model1.js
+         |  |  |- model2.js
+         |  |- views
+         |     |- view1.js
+         |     |- layout              # The optimized version will use tpl to pre-compile
+         |        |- view1.html       # all the micro-templates and include them in the build
          |
          |- test                      # Test each variation of the component:
             |- index-build.html       # The build component1.js using RequireJS to load
