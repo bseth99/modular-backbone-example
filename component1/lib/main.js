@@ -1,5 +1,5 @@
 
-define(['namespace!views', 'namespace!models'], function(views, models) {
+define(['namespace!./views', 'namespace!./models'], function(views, models) {
 
    return {
       Views: views,

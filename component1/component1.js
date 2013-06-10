@@ -444,7 +444,7 @@ function( $, _, Backbone ) {
 });
 
 
-define('main',['namespace!views', 'namespace!models'], function(views, models) {
+define('main',['namespace!./views', 'namespace!./models'], function(views, models) {
 
    return {
       Views: views,
