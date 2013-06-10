@@ -1,13 +1,10 @@
 
+define(['namespace!views', 'namespace!models'], function(views, models) {
 
-define(['./scripts/models', './scripts/views'], function(models, views) {
-
-   Component1 = {
-      Models: models,
-      Views: views
+   return {
+      Views: views,
+      Models: models
    };
-
-   return Component1;
 
 });
 

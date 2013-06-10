@@ -9,7 +9,16 @@
        "jquery": "../components/jquery/jquery",
        "underscore": "../components/underscore-amd/underscore",
        "backbone": "../components/backbone-amd/backbone",
-       "tpl": "../vendor/tpl"
+       "tpl": "../vendor/tpl",
+       "namespace": "../vendor/namespace"
+     },
+
+     config: {
+         namespace: {
+            "models": "Model1,Model2",
+            "views" : "View1"
+
+         }
      }
 
    });

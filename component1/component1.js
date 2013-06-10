@@ -346,62 +346,58 @@ var requirejs, require, define;
 
 define("../build/almond", function(){});
 
+/*!
+ * @license RequireJS Namespace Plugin, Copyright (c) 2013 Ates Goral
+ * @version 0.0.1
+ * Loads modules into a namespace
+ */
+define('namespace',[ "module" ], function (module) {
+    return {
+        load: function (name, req, onload, config) {
+            var localConfig = module.config();
 
-define('scripts/models/Model1',['jquery', 'underscore', 'backbone'],
-function( $, _, Backbone ) {
+            var modules = localConfig[name],
+                path = [ name ];
 
-   return Backbone.Model.extend({
+            if (!modules) {
+                var err = new Error("Module configuration is missing");
+                err.namespaceModule = name;
+                onload.error(err);
+                return;
+            }
 
-         defaults: {
-            field1: '',
-            field2: ''
-         }
+            modules = modules.split(",");
 
-      }, { _id: 'Model1' });
+            var paths = modules.map(function (module) {
+                path[1] = module;
+                module = path.join("/");
 
-});
+                if (localConfig[module]) {
+                    module = "namespace!" + module;
+                }
 
+                return module;
+            });
 
-define('scripts/models/Model2',['jquery', 'underscore', 'backbone'],
-function( $, _, Backbone ) {
+            req(paths, function () {
+                var namespace = {},
+                    args = arguments;
 
-   return Backbone.Model.extend({
+                modules.forEach(function (module, idx) {
+                    namespace[module] = args[idx];
+                });
 
-         defaults: {
-            field3: '',
-            field4: ''
-         }
-
-      }, { _id: 'Model2' });
-
-});
-
-define('scripts/models',
-   [
-      'underscore',
-      './models/Model1',
-      './models/Model2'
-   ],
-   function( _ ) {
-
-      var args = Array.prototype.slice.call(arguments, 1);
-
-      var Models = _.chain(args)
-                    .map(function (v) {
-                        return [ v._id, v ];
-                        })
-                    .object()
-                    .value();
-
-      return Models;
-
+                onload(namespace);
+            });
+        }
+    };
 });
 
 define('tpl',{load: function(id){throw new Error("Dynamic load not allowed: " + id);}});
-define("tpl!scripts/views/layout/view1.html", function() { return function(obj){var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};with(obj||{}){__p+='<span>This is View1</span>';}return __p;}; });
+define("tpl!views/layout/view1.html", function() { return function(obj){var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};with(obj||{}){__p+='<span>This is View1</span>';}return __p;}; });
 
 
-define('scripts/views/View1',['jquery', 'underscore', 'backbone', 'tpl!./layout/view1.html'],
+define('views/View1',['jquery', 'underscore', 'backbone', 'tpl!./layout/view1.html'],
 function( $, _, Backbone, template ) {
 
    return Backbone.View.extend({
@@ -417,36 +413,43 @@ function( $, _, Backbone, template ) {
 
 });
 
-define('scripts/views',
-   [
-      'underscore',
-      './views/View1'
-   ],
-   function( _ ) {
 
-      var args = Array.prototype.slice.call(arguments, 1);
+define('models/Model1',['jquery', 'underscore', 'backbone'],
+function( $, _, Backbone ) {
 
-      var Views = _.chain(args)
-                    .map(function (v) {
-                        return [ v._id, v ];
-                        })
-                    .object()
-                    .value();
+   return Backbone.Model.extend({
 
-      return Views;
+         defaults: {
+            field1: '',
+            field2: ''
+         }
+
+      }, { _id: 'Model1' });
 
 });
 
 
+define('models/Model2',['jquery', 'underscore', 'backbone'],
+function( $, _, Backbone ) {
 
-define('main',['./scripts/models', './scripts/views'], function(models, views) {
+   return Backbone.Model.extend({
 
-   Component1 = {
-      Models: models,
-      Views: views
+         defaults: {
+            field3: '',
+            field4: ''
+         }
+
+      }, { _id: 'Model2' });
+
+});
+
+
+define('main',['namespace!views', 'namespace!models'], function(views, models) {
+
+   return {
+      Views: views,
+      Models: models
    };
-
-   return Component1;
 
 });
 
@@ -463,6 +466,17 @@ define('main',['./scripts/models', './scripts/views'], function(models, views) {
     });
     define('tpl', function () {
         return function () {};
+    });
+
+
+    require.config({
+      config: {
+           namespace: {
+              "models": "Model1,Model2",
+              "views" : "View1"
+
+           }
+      }
     });
 
     //Use almond's special top-level, synchronous require to trigger factory
